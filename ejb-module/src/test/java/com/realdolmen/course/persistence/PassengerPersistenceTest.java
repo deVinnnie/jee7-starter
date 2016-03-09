@@ -2,6 +2,7 @@ package com.realdolmen.course.persistence;
 
 
 import com.realdolmen.course.domain.*;
+import com.realdolmen.course.utilities.persistence.DataSetPersistenceTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

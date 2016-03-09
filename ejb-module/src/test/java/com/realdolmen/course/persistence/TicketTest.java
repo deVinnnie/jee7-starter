@@ -3,6 +3,7 @@ package com.realdolmen.course.persistence;
 import com.realdolmen.course.domain.Passenger;
 import com.realdolmen.course.domain.Status;
 import com.realdolmen.course.domain.Ticket;
+import com.realdolmen.course.utilities.persistence.DataSetPersistenceTest;
 import org.junit.Test;
 
 import javax.persistence.PersistenceException;

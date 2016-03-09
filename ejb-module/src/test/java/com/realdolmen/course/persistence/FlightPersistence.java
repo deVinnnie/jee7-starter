@@ -3,6 +3,7 @@ package com.realdolmen.course.persistence;
 import com.realdolmen.course.domain.DomesticFlight;
 import com.realdolmen.course.domain.Flight;
 import com.realdolmen.course.domain.InternationalFlight;
+import com.realdolmen.course.utilities.persistence.DataSetPersistenceTest;
 import org.junit.Test;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
 /**
  * Created by SDOAX36 on 10/09/2015.
  */
-public class FlightPersistence extends DataSetPersistenceTest{
+public class FlightPersistence extends DataSetPersistenceTest {
 
 
     @Test
