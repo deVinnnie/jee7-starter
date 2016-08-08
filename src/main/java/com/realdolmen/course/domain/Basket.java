@@ -1,6 +1,8 @@
 package com.realdolmen.course.domain;
 
 
+import org.slf4j.Logger;
+
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
@@ -18,6 +20,9 @@ public class Basket implements Serializable{
     @Inject
     private Conversation conversation;
 
+    @Inject
+    private Logger logger;
+
     public List<String> getItems(){
         return list;
     }
@@ -25,6 +30,7 @@ public class Basket implements Serializable{
     public void start(){
         if(conversation.isTransient()) {
             conversation.begin();
+            logger.info("Started Conversation");
             //conversation.setTimeout(5000);
         }
     }
@@ -42,6 +48,7 @@ public class Basket implements Serializable{
     public void stop(){
         if(!conversation.isTransient()) {
             conversation.end();
+            logger.info("Ended Conversation");
         }
     }
 }
