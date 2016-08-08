@@ -25,10 +25,14 @@ public class Basket implements Serializable{
     public void start(){
         if(conversation.isTransient()) {
             conversation.begin();
+            //conversation.setTimeout(5000);
         }
     }
 
     public void doSomething(){
+        this.start();
+
+
         System.out.println("Doing something");
         String item = "Item" + new Random(System.nanoTime()).nextInt(); // Performance Killer! Reinit random everytime is very expensive.
 
@@ -40,5 +44,4 @@ public class Basket implements Serializable{
             conversation.end();
         }
     }
-
 }
