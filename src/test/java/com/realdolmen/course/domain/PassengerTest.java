@@ -8,23 +8,45 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.*;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 public class PassengerTest extends JpaPersistenceTest {
 
     private Validator validator;
     private Passenger passenger;
-/*
+
     @Before
     public void setUp(){
         ValidatorFactory factory =Validation.buildDefaultValidatorFactory();
         this.validator = factory.getValidator();
-        this.passenger = new Passenger();
-    }
 
+        this.passenger = new Passenger();
+
+        PassengerId id = new PassengerId();
+        id.setSsn("1236546789");
+        id.setLastName("Duck");
+
+        passenger.setId(id);
+        passenger.setFirstName("Donald");
+        passenger.setAddress(new Address("Quackel Street", "45", "DuckTown", "3150", "DuckPond"));
+        passenger.setType(PassengerType.OCCASIONAL);
+        passenger.setCards(
+                Arrays.asList(
+                        new CreditCard("1234567", "2017-01-01", 123, CreditCardType.VISA),
+                        new CreditCard("1234456567", "2017-01-05", 123, CreditCardType.MASTER)
+                )
+        );
+        passenger.setPreferences(
+                Arrays.asList(
+                        "Coffee",
+                        "Sugar",
+                        "Milk"
+                )
+        );
+        this.entityManager().persist(passenger);
+
+    }
+/*
     @Test
     public void testFirstNameLessThan50CharsIsValid(){
         passenger.setFirstName("Vincent");
@@ -118,35 +140,7 @@ public class PassengerTest extends JpaPersistenceTest {
 
     @Test
     public void testPersistence(){
-
         EntityManager em = this.entityManager();
-        Passenger p = new Passenger();
-
-
-        PassengerId id = new PassengerId();
-        id.setSsn("1236546789");
-        id.setLastName("Duck");
-
-        p.setId(id);
-
-        p.setFirstName("Donald");
-        p.setAddress(new Address("Quackel Street", "45", "DuckTown", "3150", "DuckPond"));
-        p.setType(PassengerType.OCCASIONAL);
-        p.setCards(
-                Arrays.asList(
-                        new CreditCard("1234567", "2017-01-01", 123, CreditCardType.VISA),
-                        new CreditCard("1234456567", "2017-01-05", 123, CreditCardType.MASTER)
-                )
-        );
-        p.setPreferences(
-                Arrays.asList(
-                        "Coffee",
-                        "Sugar",
-                        "Milk"
-                )
-        );
-
-        em.persist(p);
 
         Passenger p2 = new Passenger();
         PassengerId id2 = new PassengerId();
@@ -174,7 +168,7 @@ public class PassengerTest extends JpaPersistenceTest {
 
         em.persist(p2);
 
-        PassengerId dbid1 = p.getId();
+        PassengerId dbid1 = passenger.getId();
         PassengerId dbid2 = p2.getId();
 
         em.flush();
@@ -188,5 +182,27 @@ public class PassengerTest extends JpaPersistenceTest {
 
         //Passenger p2 = em.find(Passenger.class, id);
         // System.out.println(p2.getFirstName());
+    }
+
+    @Test
+    public void testTicket(){
+        Flight outFlight = new Flight("ASE-4254",
+                                        Calendar.getInstance().getTime(),
+                                        Calendar.getInstance().getTime()
+                );
+
+        entityManager().persist(outFlight);
+
+        Flight returnFlight = new Flight("USA-1338",
+                Calendar.getInstance().getTime(),
+                Calendar.getInstance().getTime()
+        );
+
+        entityManager().persist(returnFlight);
+
+
+        Ticket ticket = new Ticket(30.3, passenger, outFlight, returnFlight);
+        entityManager().persist(ticket);
+
     }
 }

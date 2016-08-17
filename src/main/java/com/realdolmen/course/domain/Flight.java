@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Flight {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String number;
@@ -21,6 +21,26 @@ public class Flight {
     @ManyToMany
     private List<Passenger> passengerList;
 
+    @ManyToOne
+    private Airport arrival;
+
+    @ManyToOne
+    private Airport departure;
+
+    @ManyToOne
+    private Plane plane;
+
+
+    public Flight() {
+    }
+
+    public Flight(String number, Date departureTime, Date arrivalTime) {
+        this.number = number;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+    }
+
+    //<editor-fold="Getters & Setters">
     public Long getId() {
         return id;
     }
@@ -60,4 +80,29 @@ public class Flight {
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;
     }
+
+    public Airport getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(Airport arrival) {
+        this.arrival = arrival;
+    }
+
+    public Airport getDeparture() {
+        return departure;
+    }
+
+    public void setDeparture(Airport departure) {
+        this.departure = departure;
+    }
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+    //</editor-fold>
 }

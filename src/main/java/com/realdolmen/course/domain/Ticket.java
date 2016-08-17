@@ -18,6 +18,18 @@ public class Ticket {
     @ManyToOne
     private Flight returnFlight;
 
+    private Status status;
+
+    public Ticket() {
+    }
+
+    public Ticket(Double price, Passenger passenger, Flight outFlight, Flight returnFlight) {
+        this.price = price;
+        this.passenger = passenger;
+        this.outFlight = outFlight;
+        this.returnFlight = returnFlight;
+    }
+
     public Long getId() {
         return id;
     }
@@ -56,5 +68,13 @@ public class Ticket {
 
     public void setReturnFlight(Flight returnFlight) {
         this.returnFlight = returnFlight;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
