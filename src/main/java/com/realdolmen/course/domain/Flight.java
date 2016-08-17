@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Flight {
-
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Flight extends AbstractEntity {
 
     private String number;
 
@@ -41,14 +39,6 @@ public class Flight {
     }
 
     //<editor-fold="Getters & Setters">
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
     }

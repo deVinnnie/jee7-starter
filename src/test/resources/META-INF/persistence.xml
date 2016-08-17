@@ -60,7 +60,8 @@
         <class>com.realdolmen.course.domain.Ticket</class>
         <class>com.realdolmen.course.domain.Airport</class>
         <class>com.realdolmen.course.domain.Plane</class>
-
+        <class>com.realdolmen.course.domain.DomesticFlight</class>
+        <class>com.realdolmen.course.domain.InternationalFlight</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

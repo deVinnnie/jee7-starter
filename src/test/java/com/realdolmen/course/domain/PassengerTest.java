@@ -186,14 +186,14 @@ public class PassengerTest extends JpaPersistenceTest {
 
     @Test
     public void testTicket(){
-        Flight outFlight = new Flight("ASE-4254",
+        Flight outFlight = new DomesticFlight("ASE-4254",
                                         Calendar.getInstance().getTime(),
                                         Calendar.getInstance().getTime()
                 );
 
         entityManager().persist(outFlight);
 
-        Flight returnFlight = new Flight("USA-1338",
+        Flight returnFlight = new DomesticFlight("USA-1338",
                 Calendar.getInstance().getTime(),
                 Calendar.getInstance().getTime()
         );
