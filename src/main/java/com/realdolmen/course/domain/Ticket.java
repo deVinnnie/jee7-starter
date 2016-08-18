@@ -1,11 +1,10 @@
 package com.realdolmen.course.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-public class Ticket {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Ticket extends AbstractEntity{
 
     private Double price;
 
@@ -20,6 +19,8 @@ public class Ticket {
 
     private Status status;
 
+
+
     public Ticket() {
     }
 
@@ -28,14 +29,6 @@ public class Ticket {
         this.passenger = passenger;
         this.outFlight = outFlight;
         this.returnFlight = returnFlight;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Double getPrice() {

@@ -24,6 +24,9 @@ public class Passenger {
     @EmbeddedId
     private PassengerId id;
 
+    @Version
+    private Long version;
+
     @Size(max = 50)
     private String firstName;
 
@@ -159,5 +162,13 @@ public class Passenger {
 
     public void setPreferences(List<String> preferences) {
         this.preferences = preferences;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

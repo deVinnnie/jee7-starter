@@ -1,9 +1,8 @@
 package com.realdolmen.course.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Defines common fields used by most AirportEntities.
@@ -15,6 +14,11 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Integer version;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdateDate;
 
     public AbstractEntity(){
     }
@@ -25,5 +29,19 @@ public abstract class AbstractEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void updateLastUpdateDate(){
+        this.lastUpdateDate = new Date();
     }
 }
