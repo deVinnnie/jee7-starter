@@ -32,6 +32,10 @@ public class Ticket extends AbstractEntity implements Serializable{
         this.returnFlight = returnFlight;
     }
 
+    public Ticket(Double price){
+        this.price = price;
+    }
+
     public Double getPrice() {
         return price;
     }

@@ -3,6 +3,8 @@ package com.realdolmen.course.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class Passenger implements Serializable{
     private byte[] picture;
 
     @ElementCollection
-    private List<String> preferences;
+    private List<String> preferences = new ArrayList<>();
 
     @Transient
     private int age;
@@ -171,6 +173,14 @@ public class Passenger implements Serializable{
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override

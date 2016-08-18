@@ -5,6 +5,7 @@ import com.realdolmen.course.domain.PassengerId;
 
 import javax.ejb.Remote;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Remote
 public interface PassengerEJBRemote {
@@ -13,4 +14,5 @@ public interface PassengerEJBRemote {
     void createPassenger(Passenger passenger);
     void deletePassenger(Passenger passenger);
     void updatePassenger(Passenger passenger);
+    Future<String> payByCreditCard();
 }
