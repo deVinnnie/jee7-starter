@@ -6,6 +6,7 @@ import com.realdolmen.course.domain.PassengerId;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class PassengerRepository {
@@ -39,5 +40,11 @@ public class PassengerRepository {
 
     public Passenger findById(PassengerId id){
         return em.find(Passenger.class, id);
+    }
+
+    public List<Passenger> findAll(){
+        List<Passenger> allPassengers = em.createNamedQuery(Passenger.FIND_ALL, Passenger.class)
+                .getResultList();
+        return allPassengers;
     }
 }

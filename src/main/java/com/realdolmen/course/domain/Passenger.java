@@ -2,6 +2,7 @@ package com.realdolmen.course.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
         @NamedQuery(name = Passenger.FIND_TICKETS_BY_PASSENGER_ID, query = "SELECT p.tickets FROM Passenger p WHERE p.id = :id"),
         @NamedQuery(name = Passenger.DELETE_ALL, query = "DELETE FROM Passenger p WHERE p.tickets IS EMPTY")
 })
-public class Passenger {
+public class Passenger implements Serializable{
     public static final String FIND_ALL = "Passenger.findAll";
     public static final String FIND_ALL_LAST_NAMES = "Passenger.findAllLastNames";
     public static final String TOTAL_FREQUENT_FLYER_MILES = "Passenger.totalFrequentFlyerMiles";
@@ -170,5 +171,10 @@ public class Passenger {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    @Override
+    public String toString() {
+        return "Passenger{" + firstName + ' ' + id.getLastName() + '}';
     }
 }

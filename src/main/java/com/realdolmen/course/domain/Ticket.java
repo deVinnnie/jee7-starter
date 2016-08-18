@@ -1,10 +1,11 @@
 package com.realdolmen.course.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Ticket extends AbstractEntity{
+public class Ticket extends AbstractEntity implements Serializable{
 
     private Double price;
 
