@@ -30,6 +30,7 @@ public class PassengerTest extends JpaPersistenceTest {
         passenger.setFirstName("Donald");
         passenger.setAddress(new Address("Quackel Street", "45", "DuckTown", "3150", "DuckPond"));
         passenger.setType(PassengerType.OCCASIONAL);
+        passenger.setDateOfBirth(Calendar.getInstance().getTime());
         passenger.setCards(
                 Arrays.asList(
                         new CreditCard("1234567", "2017-01-01", 123, CreditCardType.VISA),
@@ -203,6 +204,5 @@ public class PassengerTest extends JpaPersistenceTest {
 
         Ticket ticket = new Ticket(30.3, passenger, outFlight, returnFlight);
         entityManager().persist(ticket);
-
     }
 }

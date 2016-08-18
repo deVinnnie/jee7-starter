@@ -6,7 +6,20 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Passenger.FIND_ALL, query = "SELECT p FROM Passenger p"),
+        @NamedQuery(name = Passenger.FIND_ALL_LAST_NAMES, query = "SELECT p.id.lastName FROM Passenger p"),
+        @NamedQuery(name = Passenger.TOTAL_FREQUENT_FLYER_MILES, query = "SELECT SUM(p.frequentFlyerMiles) FROM Passenger p"),
+        @NamedQuery(name = Passenger.FIND_TICKETS_BY_PASSENGER_ID, query = "SELECT p.tickets FROM Passenger p WHERE p.id = :id"),
+        @NamedQuery(name = Passenger.DELETE_ALL, query = "DELETE FROM Passenger p WHERE p.tickets IS EMPTY")
+})
 public class Passenger {
+    public static final String FIND_ALL = "Passenger.findAll";
+    public static final String FIND_ALL_LAST_NAMES = "Passenger.findAllLastNames";
+    public static final String TOTAL_FREQUENT_FLYER_MILES = "Passenger.totalFrequentFlyerMiles";
+    public static final String FIND_TICKETS_BY_PASSENGER_ID = "Passenger.findTicketsByPassengerId";
+    public static final String DELETE_ALL = "Passenger.deleteAll";
+
 
     @EmbeddedId
     private PassengerId id;
@@ -51,6 +64,13 @@ public class Passenger {
 
 
     public Passenger() {
+    }
+
+    public Passenger(PassengerId id, String firstName, Date dateOfBirth, PassengerType type) {
+        this.id = id;
+        this.firstName = firstName;
+        this.dateOfBirth = dateOfBirth;
+        this.type = type;
     }
 
     public PassengerId getId() {

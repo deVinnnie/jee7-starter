@@ -11,6 +11,14 @@ public class PassengerId implements Serializable{
     @Size(max = 50)
     private String lastName;
 
+    public PassengerId() {
+    }
+
+    public PassengerId(String ssn, String lastName) {
+        this.ssn = ssn;
+        this.lastName = lastName;
+    }
+
     public String getSsn() {
         return ssn;
     }
