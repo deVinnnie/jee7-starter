@@ -7,14 +7,28 @@ import com.realdolmen.course.domain.Ticket;
 import com.realdolmen.course.repository.PassengerRepository;
 import com.realdolmen.course.repository.TicketRepository;
 
+import javax.annotation.Resource;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.JMSPasswordCredential;
+import javax.jms.Queue;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateful
 public class PassengerStatefulEJB implements  PassengerStatefulEJBRemote{
+
+    @Inject
+    @JMSConnectionFactory("java:/ConnectionFactory") // optional JNDI lookup name
+    @JMSPasswordCredential(userName="administrator", password="Azerty123!") // if required
+    private JMSContext context;
+
+    @Resource(lookup = "java:jboss/exported/rd/queues/TicketQueue")
+    private Queue queue;
+
 
     @Inject
     private PassengerRepository passengerRepository;
@@ -52,10 +66,12 @@ public class PassengerStatefulEJB implements  PassengerStatefulEJBRemote{
         passenger.setCards(creditCardList);
         passenger.setTickets(tickets);
 
+
         passengerRepository.save(passenger);
 
         for(Ticket ticket : tickets) {
             ticketRepository.save(ticket);
+            context.createProducer().send(queue, ticket);
         }
     }
 }

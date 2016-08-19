@@ -13,11 +13,12 @@ public abstract class RemoteJmsTest extends RemoteIntegrationTest {
     protected Connection connection;
     protected Session session;
     protected MessageProducer producer;
+    protected String queueLookup = "rd/queues/RealDolmenQueue";
 
     @Before
     public void initializeJms() throws Exception {
         ConnectionFactory connectionFactory = lookup("jms/RemoteConnectionFactory");
-        Queue queue = lookup("rd/queues/RealDolmenQueue");
+        Queue queue = lookup(queueLookup);
         connection = connectionFactory.createConnection("administrator", "Azerty123!");
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         producer = session.createProducer(queue);
