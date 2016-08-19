@@ -29,6 +29,12 @@
 
         <br/>
 
+        <h:outputLabel value="Type"/>
+        <h:selectOneListbox value="#{passengerBean.type}">
+            <f:selectItem itemLabel="Occasional" itemValue="OCCASIONAL"/>
+            <f:selectItem itemLabel="Regular" itemValue="REGULAR"/>
+        </h:selectOneListbox>
+
         <h:commandButton value="Register" action="#{passengerBean.register()}"/>
     </h:form>
     <p>Greetings from Earth.</p>

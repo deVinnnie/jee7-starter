@@ -36,8 +36,15 @@ public class PassengerBean implements Serializable{
     }
 
     public String confirm() {
+        PassengerId passengerId = new PassengerId(ssn, lastName);
+        Passenger duplicate = passengerRepository.findById(passengerId);
+
+        if(duplicate != null){
+            return "register.xhtml";
+        }
+
         Passenger passenger = new Passenger(
-                new PassengerId(ssn, lastName),
+                passengerId,
                 firstName,
                 new Date(),
                 type
