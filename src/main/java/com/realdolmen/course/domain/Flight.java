@@ -1,12 +1,13 @@
 package com.realdolmen.course.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Flight extends AbstractEntity {
+public abstract class Flight extends AbstractEntity implements Serializable{
 
     private String number;
 
