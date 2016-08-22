@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title><ui:insert name="pageTitle"/></title>
+    <style>
+        body{
+            background: #EEE;
+        }
+
+        #header, #content{
+            border: 1px solid black;
+            background: #FFF;
+            margin-top: 1em;
+        }
+
+        #container{
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .positive{
+            color: #000000;
+        }
+
+        .negative{
+            color: #FF0000;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div id="container">
+        <div id="header">
+            <span>LOGO</span>
+
+            <h1>
+                <ui:insert name="pageTitle">
+                    Title
+                </ui:insert>
+            </h1>
+        </div>
+
+        <main id="content">
+            <ui:insert name="content">
+                Lorem Ipsum
+            </ui:insert>
+        </main>
+
+        <footer>
+            Copyright RealDolmen. All rights reserved.
+        </footer>
+    </div>
+</h:body>
+</html>
