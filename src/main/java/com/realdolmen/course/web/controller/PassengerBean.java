@@ -5,95 +5,119 @@ import com.realdolmen.course.domain.PassengerId;
 import com.realdolmen.course.domain.PassengerType;
 import com.realdolmen.course.repository.PassengerRepository;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
-@Named
-@SessionScoped
+@ManagedBean(name = "passengerBean")
+@ViewScoped
 public class PassengerBean implements Serializable{
 
-    private String lastName = "Potter";
+    private boolean editable = true;
 
-    private String ssn = "123";
+    private PassengerId currentId = new PassengerId();
 
-    private String firstName = "Harry";
-
-    private String dateOfBirth = "";
-
-    private PassengerType type = PassengerType.OCCASIONAL;
+    private Passenger passenger;
 
     @Inject
     private PassengerRepository passengerRepository;
 
+    private Calendar c;
+
+    public void setUpAfterParam(){
+        if(currentId.getSsn() != null && currentId.getLastName() != null){
+            Passenger passenger = passengerRepository.findById(currentId);
+            if(passenger == null){
+                throw new IllegalArgumentException("Passenger does not exist");
+            }
+
+            this.passenger = passenger;
+        }
+        else {
+            c = Calendar.getInstance();
+            c.add(Calendar.YEAR, -5);
+
+            this.passenger = new Passenger(
+                    new PassengerId(
+                            "123456",
+                            "Potter"
+                    ),
+                    "Harry",
+                    Calendar.getInstance().getTime(),
+                    PassengerType.OCCASIONAL
+            );
+        }
+    }
 
     public String register(){
-        return "confirm.xhtml";
-
-
+        /*if(lastName.equals("") || ssn.equals("") || firstName.equals("") ||
+                dateOfBirth.equals("")){
+            return "register.xhtml";
+        }*/
+        this.editable = false;
+        return null; // Use null  to stay in same view!
     }
 
     public String confirm() {
-        PassengerId passengerId = new PassengerId(ssn, lastName);
+        /*PassengerId passengerId = new PassengerId(ssn, lastName);
         Passenger duplicate = passengerRepository.findById(passengerId);
 
         if(duplicate != null){
-            return "register.xhtml";
-        }
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("error", "Duplicate passenger!");
 
-        Passenger passenger = new Passenger(
+            return "main.xhtml";
+        }*/
+
+        /*Passenger passenger = new Passenger(
                 passengerId,
                 firstName,
-                new Date(),
+                c.getTime(),
                 type
-        );
+        );*/
 
-        passengerRepository.save(passenger);
+        passengerRepository.save(this.passenger);
 
-        return "index.xhtml";
+        return "all-passengers.xhtml?faces-redirect=true";
     }
 
-
-
-    public String getLastName() {
-        return lastName;
+    public String update(){
+        passengerRepository.update(passenger);
+        return "all-passengers.xhtml?faces-redirect=true";
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String review(){
+        this.editable = true;
+        return null;
     }
 
-    public String getSsn() {
-        return ssn;
+    public boolean isEditable() {
+        return editable;
     }
 
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public PassengerId getCurrentId() {
+        return currentId;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setCurrentId(PassengerId currentId) {
+        this.currentId = currentId;
     }
 
-    public PassengerType getType() {
-        return type;
-    }
-
-    public void setType(PassengerType type) {
-        this.type = type;
+    public String delete(PassengerId passengerId) {
+        this.passengerRepository.remove(passengerId);
+        return "all-passengers.xhtml?faces-redirect=true";
     }
 }

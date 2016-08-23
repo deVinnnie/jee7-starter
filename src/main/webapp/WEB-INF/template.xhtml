@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
+    <!-- xmlns=xhtml mag weg. Is ook geldig in JSF voor html5. -->
     <title><ui:insert name="pageTitle"/></title>
     <style>
         body{
-            background: #EEE;
+            background: #EFEFEF;
         }
 
         #header, #content{
             border: 1px solid black;
             background: #FFF;
             margin-top: 1em;
+            padding: 10px;
         }
 
         #container{
@@ -28,19 +30,42 @@
         .negative{
             color: #FF0000;
         }
+
+        .errorMessage{
+            padding: 10px;
+            background: #d9534f;
+            color:#FFF;
+        }
+
+        footer{
+            text-align: center;
+            padding: 10px;
+        }
+
+        .inputLocked{
+            font-weight: bold;
+        }
     </style>
 </h:head>
 
 <h:body>
     <div id="container">
         <div id="header">
-            <h:graphicImage library="images" name="Tux.png" width="50"/>
+            <h:link outcome="main.xhtml">
+                <h:graphicImage library="images" name="Tux.png" width="50"/>
+            </h:link>
             <h1>
                 <ui:insert name="pageTitle">
                     Title
                 </ui:insert>
             </h1>
         </div>
+
+        <c:if test="#{not empty flash.error}">
+            <div class="errorMessage">
+                #{flash.error}
+            </div>
+        </c:if>
 
         <main id="content">
             <ui:insert name="content">
