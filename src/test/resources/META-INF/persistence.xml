@@ -62,6 +62,7 @@
         <class>com.realdolmen.course.domain.Plane</class>
         <class>com.realdolmen.course.domain.DomesticFlight</class>
         <class>com.realdolmen.course.domain.InternationalFlight</class>
+        <class>com.realdolmen.course.domain.AccountNumber</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

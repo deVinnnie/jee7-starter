@@ -30,9 +30,11 @@
                 <h:outputLabel>First Name</h:outputLabel>
 
                 <h:panelGroup>
-                    <h:inputText id="firstName" value="#{passengerBean.passenger.firstName}" rendered="#{passengerBean.editable}"/>
+                    <h:inputText id="firstName" value="#{passengerBean.passenger.firstName}" rendered="#{passengerBean.editable}">
+                        <f:ajax event="blur" render="errorFirstName"/>
+                    </h:inputText>
                     <h:outputText class="inputLocked" value="#{passengerBean.passenger.firstName}" rendered="#{not passengerBean.editable}"/>
-                    <h:message for="firstName"/>
+                    <h:message id="errorFirstName" for="firstName"/>
                 </h:panelGroup>
 
                 <h:outputLabel>Last Name</h:outputLabel>
@@ -47,7 +49,7 @@
 
                 <h:panelGroup>
                     <h:inputText id="dateOfBirth" value="#{passengerBean.passenger.dateOfBirth}" rendered="#{passengerBean.editable}">
-                        <f:convertDateTime dateStyle="full" timeZone="EST" type="date"/>
+                        <f:convertDateTime timeZone="EST" type="date" pattern="MM-dd-yyyy"/>
                     </h:inputText>
                     <h:outputText class="inputLocked" value="#{passengerBean.passenger.dateOfBirth}" rendered="#{not passengerBean.editable}"/>
                     <h:message for="dateOfBirth"/>
@@ -70,6 +72,14 @@
                     </h:selectOneListbox>
                     <h:outputText class="inputLocked" value="#{passengerBean.passenger.type}" rendered="#{not passengerBean.editable}"/>
                     <h:message for="passengerType"/>
+                </h:panelGroup>
+
+                <h:outputLabel value="Account Number"/>
+
+                <h:panelGroup>
+                    <h:inputText id="accountNumber" value="#{passengerBean.passenger.accountNumber}" rendered="#{passengerBean.editable}"/>
+                    <h:outputText class="inputLocked" value="#{passengerBean.passenger.accountNumber}" rendered="#{not passengerBean.editable}"/>
+                    <h:message for="accountNumber"/>
                 </h:panelGroup>
 
                 <h:commandButton value="Register" action="#{passengerBean.register()}" rendered="#{passengerBean.editable}"/>

@@ -48,4 +48,11 @@ public class PassengerRepository implements Serializable{
                 .getResultList();
         return allPassengers;
     }
+
+    public List<Passenger> search(String searchTerm) {
+        List<Passenger> passengers =  em.createQuery("SELECT p FROM Passenger p WHERE lower(p.firstName) LIKE :searchTerm OR lower(p.id.lastName) LIKE :searchTerm", Passenger.class)
+                .setParameter("searchTerm", "%" + searchTerm + "%")
+                .getResultList();
+        return passengers;
+    }
 }

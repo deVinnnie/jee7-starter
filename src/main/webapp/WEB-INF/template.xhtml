@@ -1,81 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
-<h:head>
-    <!-- xmlns=xhtml mag weg. Is ook geldig in JSF voor html5. -->
-    <title><ui:insert name="pageTitle"/></title>
-    <style>
-        body{
-            background: #EFEFEF;
-        }
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:rd="http://xmlns.jcp.org/jsf/composite/realdolmen"
+      lang="#{languageBean.language}">
+<f:view locale="#{languageBean.locale}">
+    <h:head>
+        <!-- xmlns=xhtml mag weg. Is ook geldig in JSF voor html5. -->
+        <title><ui:insert name="pageTitle"/></title>
+        <style>
+            body{
+                background: #EFEFEF;
+            }
 
-        #header, #content{
-            border: 1px solid black;
-            background: #FFF;
-            margin-top: 1em;
-            padding: 10px;
-        }
+            #header, #content{
+                border: 1px solid black;
+                background: #FFF;
+                margin-top: 1em;
+                padding: 10px;
+            }
 
-        #container{
-            width: 960px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+            #container{
+                width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
-        .positive{
-            color: #000000;
-        }
+            .positive{
+                color: #000000;
+            }
 
-        .negative{
-            color: #FF0000;
-        }
+            .negative{
+                color: #FF0000;
+            }
 
-        .errorMessage{
-            padding: 10px;
-            background: #d9534f;
-            color:#FFF;
-        }
+            .errorMessage{
+                padding: 10px;
+                background: #d9534f;
+                color:#FFF;
+            }
 
-        footer{
-            text-align: center;
-            padding: 10px;
-        }
+            footer{
+                text-align: center;
+                padding: 10px;
+            }
 
-        .inputLocked{
-            font-weight: bold;
-        }
-    </style>
-</h:head>
+            .inputLocked{
+                font-weight: bold;
+            }
 
-<h:body>
-    <div id="container">
-        <div id="header">
-            <h:link outcome="main.xhtml">
-                <h:graphicImage library="images" name="Tux.png" width="50"/>
-            </h:link>
-            <h1>
-                <ui:insert name="pageTitle">
-                    Title
-                </ui:insert>
-            </h1>
-        </div>
+            .current-language{
+                font-weight: bold;
+            }
+        </style>
+    </h:head>
 
-        <c:if test="#{not empty flash.error}">
-            <div class="errorMessage">
-                #{flash.error}
+    <h:body>
+        <div id="container">
+            <div id="header">
+                <h:link outcome="main.xhtml">
+                    <h:graphicImage library="images" name="Tux.png" width="50"/>
+                </h:link>
+
+                <h1>
+                    <ui:insert name="pageTitle">
+                        Title
+                    </ui:insert>
+                </h1>
+
+                <!-- Language Switcher -->
+                <h:outputFormat value="#{msg['lang.current']}">
+                    <f:param value="#{msg[languageBean.language]}"/>
+                </h:outputFormat>
+
+                <h3>
+                    <h:outputFormat value="#{msg['lang.title']}"/>
+                </h3>
+
+                <h:form id="langauge_form">
+                    <ul>
+                        <c:forEach items="#{languageBean.locales}" var="lan" varStatus="loop">
+                            <c:choose>
+                                <c:when test="#{lan.language eq languageBean.language}">
+                                    <li class="current-language">
+                                        <h:outputFormat value="#{msg[lan.language]}"/>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li>
+                                        <h:commandLink action="#{languageBean.changeLanguage(lan.language)}"
+                                                         value="#{msg[lan.language]}" />
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </ul>
+                </h:form>
             </div>
-        </c:if>
 
-        <main id="content">
-            <ui:insert name="content">
-                Lorem Ipsum
-            </ui:insert>
-        </main>
+            <c:if test="#{not empty flash.error}">
+                <div class="errorMessage">
+                    #{flash.error}
+                </div>
+            </c:if>
 
-        <footer>
-            Copyright RealDolmen. All rights reserved.
-        </footer>
-    </div>
-</h:body>
+            <main id="content">
+                <ui:insert name="content">
+                    Lorem Ipsum
+                </ui:insert>
+            </main>
+
+            <footer>
+                Copyright RealDolmen. All rights reserved.
+            </footer>
+        </div>
+    </h:body>
+</f:view>
 </html>

@@ -1,10 +1,12 @@
 package com.realdolmen.course.domain;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,9 @@ public class Passenger implements Serializable{
     @OneToMany(mappedBy = "passenger")
     private List<Ticket> tickets;
 
+    @Embedded
+    @ValidAccountNumber
+    private AccountNumber accountNumber;
 
     public Passenger() {
     }
@@ -136,11 +141,18 @@ public class Passenger implements Serializable{
     }
 
     public int getAge() {
-        Date currentDate = new Date();
-        Long age = currentDate.getTime() - dateOfBirth.getTime();
-        Date dt = new Date(age);
+        Calendar c = Calendar.getInstance();
 
-        return dt.getYear();
+        Calendar birth = Calendar.getInstance();
+        birth.setTime(dateOfBirth);
+
+        int years = c.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+
+        if(birth.get(Calendar.DAY_OF_YEAR) > birth.get(Calendar.DAY_OF_YEAR)){
+            years++;
+        }
+
+        return years;
     }
 
     public Address getAddress() {
@@ -186,5 +198,13 @@ public class Passenger implements Serializable{
     @Override
     public String toString() {
         return "Passenger{" + firstName + ' ' + id.getLastName() + '}';
+    }
+
+    public AccountNumber getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(AccountNumber accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

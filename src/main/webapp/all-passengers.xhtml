@@ -5,7 +5,16 @@
     <ui:define name="pageTitle">All Passengers</ui:define>
 
     <ui:define name="content">
-        <h:dataTable value="#{allPassengerBean.passengers}" var="passenger">
+        <h:form id="search_form">
+            <h:outputLabel for="search_field">
+                <h:outputFormat value="#{msg['pages.passengers.search']}"/>
+            </h:outputLabel>
+            <h:inputText id="search_field" value="#{allPassengerBean.searchTerm}">
+                <f:ajax event="keyup" render=":passengers_table" listener="#{allPassengerBean.findPassengers}"/>
+            </h:inputText>
+        </h:form>
+
+        <h:dataTable id="passengers_table" value="#{allPassengerBean.passengers}" var="passenger">
             <h:column>
                 <f:facet name="header">
                     SSN
